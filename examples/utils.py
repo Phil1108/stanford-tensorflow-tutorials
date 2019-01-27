@@ -71,7 +71,7 @@ def download_mnist(path):
     Download from http://yann.lecun.com/exdb/mnist
     """
     safe_mkdir(path)
-    url = 'http://yann.lecun.com/exdb/mnist'
+    url = 'http://yann.lecun.com/exdb/mnist/'
     filenames = ['train-images-idx3-ubyte.gz',
                 'train-labels-idx1-ubyte.gz',
                 't10k-images-idx3-ubyte.gz',

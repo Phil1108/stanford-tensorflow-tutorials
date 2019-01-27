@@ -35,6 +35,7 @@ train_data = train_data.batch(batch_size)
 
 # create testing Dataset and batch it
 test_data = tf.data.Dataset.from_tensor_slices(test)
+test_data = test_data.shuffle(10000)
 test_data = test_data.batch(batch_size)
 
 # create one iterator and initialize it with different datasets
@@ -50,13 +51,21 @@ test_init = iterator.make_initializer(test_data)	# initializer for train_data
 # b is initialized to 0
 # shape of w depends on the dimension of X and Y so that Y = tf.matmul(X, w)
 # shape of b depends on Y
+#w = tf.get_variable(name='weights', shape=(784,200), initializer=tf.random_normal_initializer(mean=0.0, stddev=0.01))
+#z = tf.get_variable(name='hidden_layer', shape=(200,10), initializer=tf.random_normal_initializer(mean=0.0, stddev=0.01))
+#b = tf.get_variable(name='bias', shape= (1,10), initializer=tf.zeros_initializer())
+#b2 = tf.get_variable(name='biashidden', shape= (1,200), initializer=tf.zeros_initializer())
+
 w = tf.get_variable(name='weights', shape=(784,10), initializer=tf.random_normal_initializer(mean=0.0, stddev=0.01))
 b = tf.get_variable(name='bias', shape= (1,10), initializer=tf.zeros_initializer())
 
 # Step 4: build model
 # the model that returns the logits.
 # this logits will be later passed through softmax layer
-logits = tf.matmul(img,w) + b
+
+logits = tf.nn.relu(tf.matmul(img,w) + b)
+
+#logits = tf.matmul((tf.matmul(img,w) + b2), z) + b
 
 # Step 5: define loss function
 # use cross entropy of softmax of logits as the loss function
